@@ -2061,3 +2061,381 @@ function escapeHtml(value) {
   return div.innerHTML;
 
 }
+// =====================================================
+// DISCORDA SERVER SETTINGS
+// =====================================================
+
+function openServerSettings() {
+    if (!currentServer) {
+        alert("Please select a server first.");
+        return;
+    }
+
+    const existing = document.getElementById("server-settings-screen");
+    if (existing) {
+        existing.remove();
+    }
+
+    const screen = document.createElement("div");
+    screen.id = "server-settings-screen";
+
+    screen.innerHTML = `
+        <div class="server-settings">
+
+            <div class="server-settings-sidebar">
+
+                <div class="server-settings-title">
+                    ${escapeHtml(currentServer.name)}
+                </div>
+
+                <div class="server-settings-item active"
+                     onclick="showServerSetting('profile')">
+                    🖼️ Server Profile
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('tag')">
+                    🏷️ Server Tag
+                </div>
+
+                <div class="server-settings-section">
+                    EXPRESSION
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('emoji')">
+                    😀 Emoji
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('stickers')">
+                    🖼️ Stickers
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('soundboard')">
+                    🔊 Soundboard
+                </div>
+
+                <div class="server-settings-section">
+                    PEOPLE
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('members')">
+                    👥 Members
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('roles')">
+                    🎭 Roles
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('invites')">
+                    🔗 Invites
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('access')">
+                    🔐 Access
+                </div>
+
+                <div class="server-settings-section">
+                    APPS
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('apps')">
+                    🤖 Apps
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('integrations')">
+                    🔌 Integrations
+                </div>
+
+                <div class="server-settings-section">
+                    MODERATION
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('moderation')">
+                    🛡️ Moderation
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('safety')">
+                    🛡️ Safety Setup
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('audit')">
+                    📋 Audit Log
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('bans')">
+                    🚫 Bans
+                </div>
+
+                <div class="server-settings-section">
+                    COMMUNITY
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('community')">
+                    🌐 Community Overview
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('onboarding')">
+                    👋 Onboarding
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('insights')">
+                    📊 Server Insights
+                </div>
+
+                <div class="server-settings-item"
+                     onclick="showServerSetting('template')">
+                    📄 Server Template
+                </div>
+
+                <div class="server-settings-delete"
+                     onclick="deleteCurrentServer()">
+                    🗑️ Delete Server
+                </div>
+
+                <div class="server-settings-back"
+                     onclick="closeServerSettings()">
+                    ← Back to Discorda
+                </div>
+
+            </div>
+
+            <div class="server-settings-content" id="server-settings-content">
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(screen);
+
+    showServerSetting("profile");
+}
+
+
+function closeServerSettings() {
+    const screen = document.getElementById("server-settings-screen");
+
+    if (screen) {
+        screen.remove();
+    }
+}
+
+
+function showServerSetting(section) {
+
+    const content = document.getElementById("server-settings-content");
+
+    if (!content) return;
+
+    document.querySelectorAll(".server-settings-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    const clicked = [...document.querySelectorAll(".server-settings-item")]
+        .find(item => item.getAttribute("onclick") === `showServerSetting('${section}')`);
+
+    if (clicked) {
+        clicked.classList.add("active");
+    }
+
+    const titles = {
+        profile: "Server Profile",
+        tag: "Server Tag",
+        emoji: "Emoji",
+        stickers: "Stickers",
+        soundboard: "Soundboard",
+        members: "Members",
+        roles: "Roles",
+        invites: "Invites",
+        access: "Access",
+        apps: "Apps",
+        integrations: "Integrations",
+        moderation: "Moderation",
+        safety: "Safety Setup",
+        audit: "Audit Log",
+        bans: "Bans",
+        community: "Community Overview",
+        onboarding: "Onboarding",
+        insights: "Server Insights",
+        template: "Server Template"
+    };
+
+    const descriptions = {
+        profile: "Change your server name, icon and basic server information.",
+        tag: "Manage your server tag.",
+        emoji: "Manage custom emojis for your server.",
+        stickers: "Manage custom stickers.",
+        soundboard: "Manage sounds available in your server.",
+        members: "View and manage server members.",
+        roles: "Create and manage server roles and permissions.",
+        invites: "Create and manage server invites.",
+        access: "Control who can access your server.",
+        apps: "Manage apps connected to your server.",
+        integrations: "Manage external integrations.",
+        moderation: "Configure moderation tools.",
+        safety: "Configure server safety settings.",
+        audit: "View actions performed by server staff.",
+        bans: "Manage banned users.",
+        community: "Configure community features.",
+        onboarding: "Configure how new members join your server.",
+        insights: "View server activity and statistics.",
+        template: "Create and manage a server template."
+    };
+
+    if (section === "profile") {
+
+        content.innerHTML = `
+            <h1>Server Profile</h1>
+
+            <p class="server-settings-description">
+                ${descriptions.profile}
+            </p>
+
+            <div class="settings-card">
+
+                <label>SERVER NAME</label>
+
+                <input
+                    id="server-name-setting"
+                    value="${escapeHtml(currentServer.name)}"
+                    maxlength="100"
+                />
+
+                <button onclick="saveServerName()">
+                    Save Changes
+                </button>
+
+            </div>
+
+            <div class="settings-card">
+
+                <h2>Server Information</h2>
+
+                <p>
+                    Server ID:
+                    <code>${currentServer.id}</code>
+                </p>
+
+                <p>
+                    Owner ID:
+                    <code>${currentServer.owner_id}</code>
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+    content.innerHTML = `
+        <h1>${titles[section] || "Server Settings"}</h1>
+
+        <p class="server-settings-description">
+            ${descriptions[section] || "Manage this part of your server."}
+        </p>
+
+        <div class="settings-card">
+
+            <h2>${titles[section] || "Settings"}</h2>
+
+            <p>
+                This section is connected to Discorda's server
+                settings system and will be expanded with real
+                database functionality.
+            </p>
+
+        </div>
+    `;
+}
+
+
+async function saveServerName() {
+
+    const input = document.getElementById("server-name-setting");
+
+    if (!input || !currentServer) return;
+
+    const newName = input.value.trim();
+
+    if (!newName) {
+        alert("Enter a server name.");
+        return;
+    }
+
+    const { error } = await supabase
+        .from("servers")
+        .update({
+            name: newName
+        })
+        .eq("id", currentServer.id)
+        .eq("owner_id", currentUser.id);
+
+    if (error) {
+        console.error(error);
+        alert("Could not update the server: " + error.message);
+        return;
+    }
+
+    currentServer.name = newName;
+
+    const serverName = document.getElementById("server-name");
+
+    if (serverName) {
+        serverName.textContent = newName;
+    }
+
+    await loadServers();
+
+    alert("Server name updated!");
+}
+
+
+async function deleteCurrentServer() {
+
+    if (!currentServer) return;
+
+    const confirmation = prompt(
+        `Type "${currentServer.name}" to permanently delete this server.`
+    );
+
+    if (confirmation !== currentServer.name) {
+        return;
+    }
+
+    const { error } = await supabase
+        .from("servers")
+        .delete()
+        .eq("id", currentServer.id)
+        .eq("owner_id", currentUser.id);
+
+    if (error) {
+        console.error(error);
+        alert("Could not delete the server: " + error.message);
+        return;
+    }
+
+    closeServerSettings();
+
+    currentServer = null;
+
+    await loadServers();
+
+    showHome();
+
+    alert("Server deleted.");
+}
