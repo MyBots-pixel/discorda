@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discorda</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="servers">
+      <div class="brand">D</div>
+      <div class="server active">R</div>
+      <div class="server">🎮</div>
+      <div class="server">🟣</div>
+      <div class="server">+</div>
+    </aside>
+
+    <aside class="channels">
+      <div class="server-header">
+        <strong>Discorda Community</strong>
+        <span>⌄</span>
+      </div>
+
+      <div class="boost">⚡ 0/3 Boosts</div>
+
+      <nav>
+        <div class="category">WELCOME <span>+</span></div>
+        <a class="channel active" data-channel="welcome"># <span>welcome</span></a>
+        <a class="channel" data-channel="rules"># <span>rules</span></a>
+        <a class="channel" data-channel="announcements"># <span>announcements</span></a>
+
+        <div class="category">COMMUNITY <span>+</span></div>
+        <a class="channel" data-channel="general"># <span>general</span></a>
+        <a class="channel" data-channel="media"># <span>media</span></a>
+        <a class="channel" data-channel="bot-commands"># <span>bot-commands</span></a>
+
+        <div class="category">VOICE <span>+</span></div>
+        <a class="channel voice" data-channel="General">🔊 <span>General</span></a>
+        <a class="channel voice" data-channel="Gaming">🔊 <span>Gaming</span></a>
+        <a class="channel voice" data-channel="AFK">🔇 <span>AFK</span></a>
+      </nav>
+
+      <div class="user-panel">
+        <div class="avatar">K</div>
+        <div class="user-info">
+          <b>Kryton</b>
+          <small>Online</small>
+        </div>
+        <button title="Mute">🎙</button>
+        <button title="Settings" id="settingsBtn">⚙</button>
+      </div>
+    </aside>
+
+    <main class="chat">
+      <header class="chat-header">
+        <div>
+          <h2 id="channelTitle"># welcome</h2>
+          <p id="channelTopic">Welcome to the Discorda community.</p>
+        </div>
+        <div class="header-actions">
+          <button>🔔</button>
+          <button>📌</button>
+          <button>👥</button>
+          <button class="search">Search Discorda 🔍</button>
+        </div>
+      </header>
+
+      <section class="messages" id="messages"></section>
+
+      <div class="composer">
+        <button>＋</button>
+        <input id="messageInput" placeholder="Message # welcome" autocomplete="off">
+        <button>GIF</button>
+        <button>😊</button>
+        <button id="sendBtn">➤</button>
+      </div>
+    </main>
+
+    <aside class="members">
+      <h3>ONLINE — 4</h3>
+      <div class="member"><div class="avatar blue">K</div><span>Kryton</span><em>Owner</em></div>
+      <div class="member"><div class="avatar green">A</div><span>Arcane</span><em>Moderator</em></div>
+      <div class="member"><div class="avatar purple">C</div><span>Counting</span><em>Bot</em></div>
+      <div class="member"><div class="avatar orange">G</div><span>Giveaway</span><em>Bot</em></div>
+      <h3 class="offline">OFFLINE — 2</h3>
+      <div class="member muted"><div class="avatar">M</div><span>Mia</span></div>
+      <div class="member muted"><div class="avatar">J</div><span>Jordan</span></div>
+    </aside>
+  </div>
+
+  <div class="modal hidden" id="settingsModal">
+    <div class="modal-card">
+      <button class="close" id="closeSettings">×</button>
+      <h2>Discorda Settings</h2>
+      <p>Prototype settings panel</p>
+      <label>Display name</label>
+      <input value="Kryton">
+      <label>Theme</label>
+      <select><option>Dark</option><option>Light</option></select>
+      <button class="save" id="saveSettings">Save changes</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
