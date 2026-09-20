@@ -1,107 +1,924 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discorda</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discorda</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0d0f14;
+    color: white;
+}
+
+/* LOGIN */
+
+#loginPage {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at top, #303765 0%, #171923 35%, #0d0f14 75%);
+}
+
+.login-box {
+    width: 430px;
+    max-width: 90%;
+    padding: 40px;
+    background: #1b1e27;
+    border-radius: 14px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.55);
+    text-align: center;
+}
+
+.logo {
+    width: 65px;
+    height: 65px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: linear-gradient(135deg,#5865f2,#8b5cf6);
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.login-box h1 {
+    margin-bottom: 5px;
+}
+
+.login-box p {
+    color: #a8adb8;
+}
+
+.login-box label {
+    display: block;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #c5c8d0;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 7px;
+    background: #111319;
+    color: white;
+    outline: none;
+}
+
+.login-box input:focus {
+    outline: 2px solid #5865f2;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+.login-button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    border-radius: 7px;
+    background: #5865f2;
+    color: white;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background: #4752c4;
+}
+
+.guest-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px;
+    border-radius: 7px;
+    background: #292d38;
+    color: white;
+}
+
+.guest-button:hover {
+    background: #343946;
+}
+
+.register {
+    margin-top: 20px;
+    color: #9298a6;
+    font-size: 13px;
+}
+
+.register span {
+    color: #8ea0ff;
+    cursor: pointer;
+}
+
+/* APP */
+
+#app {
+    display: none;
+    height: 100vh;
+    grid-template-columns: 72px 250px 1fr;
+}
+
+/* SERVER BAR */
+
+.servers {
+    background: #090b10;
+    padding: 13px 10px;
+    border-right: 1px solid #20232b;
+}
+
+.server-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    background: #20242d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.server-icon:first-child {
+    background: linear-gradient(135deg,#5865f2,#8b5cf6);
+    font-size: 22px;
+}
+
+.server-icon:hover {
+    background: #5865f2;
+}
+
+/* CHANNELS */
+
+.channels {
+    background: #171a21;
+    display: flex;
+    flex-direction: column;
+}
+
+.server-name {
+    height: 58px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #272a32;
+    font-weight: bold;
+}
+
+.category {
+    padding: 18px 12px 7px;
+    font-size: 11px;
+    color: #7f8794;
+    font-weight: bold;
+}
+
+.channel {
+    margin: 2px 8px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    color: #aeb4bf;
+    cursor: pointer;
+}
+
+.channel:hover {
+    background: #252932;
+    color: white;
+}
+
+.channel.active {
+    background: #2c303a;
+    color: white;
+}
+
+.user-area {
+    margin-top: auto;
+    padding: 12px;
+    background: #11141a;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#5865f2,#3f8cff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.username {
+    flex: 1;
+    font-size: 13px;
+}
+
+.username small {
+    display: block;
+    color: #55d68b;
+    margin-top: 2px;
+}
+
+.settings {
+    background: transparent;
+    color: #aaa;
+    font-size: 18px;
+}
+
+/* CHAT */
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    background: #111318;
+}
+
+.chat-header {
+    height: 62px;
+    padding: 0 20px;
+    border-bottom: 1px solid #252831;
+    display: flex;
+    align-items: center;
+}
+
+.chat-header h2 {
+    font-size: 16px;
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 25px;
+}
+
+.welcome {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(145deg,#1a1d26,#12151b);
+    border: 1px solid #292d36;
+    border-radius: 16px;
+}
+
+.welcome h1 {
+    margin-top: 0;
+}
+
+.welcome p {
+    color: #a7adb8;
+    line-height: 1.6;
+}
+
+.message {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.message-content b {
+    font-size: 14px;
+}
+
+.message-content p {
+    margin-top: 4px;
+    color: #d7dae0;
+}
+
+.message-time {
+    color: #737a87;
+    font-size: 10px;
+    margin-left: 7px;
+}
+
+.composer {
+    margin: 0 20px 18px;
+    padding: 5px;
+    background: #1b1e26;
+    border-radius: 9px;
+    display: flex;
+}
+
+.composer input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 12px;
+    color: white;
+}
+
+.composer button {
+    background: transparent;
+    color: #aaa;
+    padding: 10px;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    width: 420px;
+    max-width: 90%;
+    padding: 30px;
+    background: #20232c;
+    border-radius: 14px;
+}
+
+.modal-box input {
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px;
+    background: #111319;
+    color: white;
+    border: none;
+    border-radius: 7px;
+}
+
+.modal-box button {
+    margin-top: 10px;
+    padding: 11px 16px;
+    border-radius: 7px;
+    background: #5865f2;
+    color: white;
+}
+
+.close {
+    float: right;
+    background: transparent !important;
+    font-size: 22px;
+}
+
+@media(max-width:700px) {
+    #app {
+        grid-template-columns: 60px 1fr;
+    }
+
+    .channels {
+        display: none;
+    }
+}
+</style>
 </head>
+
 <body>
-  <div class="app">
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage">
+
+    <div class="login-box">
+
+        <div class="logo">D</div>
+
+        <h1>Welcome back!</h1>
+
+        <p>We're excited to see you again.</p>
+
+        <form id="loginForm">
+
+            <label>Email or Username</label>
+
+            <input
+                id="loginUsername"
+                type="text"
+                placeholder="Enter your username"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                placeholder="Enter your password"
+                required
+            >
+
+            <button class="login-button">
+                Log In
+            </button>
+
+        </form>
+
+        <button class="guest-button" onclick="loginAsGuest()">
+            Continue as Guest
+        </button>
+
+        <div class="register">
+            Need an account?
+            <span onclick="openRegister()">Register</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN DISCORDA -->
+
+<div id="app">
+
+    <!-- SERVER LIST -->
+
     <aside class="servers">
-      <div class="brand">D</div>
-      <div class="server active">R</div>
-      <div class="server">🎮</div>
-      <div class="server">🟣</div>
-      <div class="server">+</div>
+
+        <div class="server-icon">D</div>
+
+        <div class="server-icon">R</div>
+
+        <div class="server-icon">🎮</div>
+
+        <div class="server-icon">+</div>
+
     </aside>
+
+
+    <!-- CHANNEL LIST -->
 
     <aside class="channels">
-      <div class="server-header">
-        <strong>Discorda Community</strong>
-        <span>⌄</span>
-      </div>
 
-      <div class="boost">⚡ 0/3 Boosts</div>
-
-      <nav>
-        <div class="category">WELCOME <span>+</span></div>
-        <a class="channel active" data-channel="welcome"># <span>welcome</span></a>
-        <a class="channel" data-channel="rules"># <span>rules</span></a>
-        <a class="channel" data-channel="announcements"># <span>announcements</span></a>
-
-        <div class="category">COMMUNITY <span>+</span></div>
-        <a class="channel" data-channel="general"># <span>general</span></a>
-        <a class="channel" data-channel="media"># <span>media</span></a>
-        <a class="channel" data-channel="bot-commands"># <span>bot-commands</span></a>
-
-        <div class="category">VOICE <span>+</span></div>
-        <a class="channel voice" data-channel="General">🔊 <span>General</span></a>
-        <a class="channel voice" data-channel="Gaming">🔊 <span>Gaming</span></a>
-        <a class="channel voice" data-channel="AFK">🔇 <span>AFK</span></a>
-      </nav>
-
-      <div class="user-panel">
-        <div class="avatar">K</div>
-        <div class="user-info">
-          <b>Kryton</b>
-          <small>Online</small>
+        <div class="server-name">
+            Discorda Community
         </div>
-        <button title="Mute">🎙</button>
-        <button title="Settings" id="settingsBtn">⚙</button>
-      </div>
+
+        <div class="category">
+            WELCOME
+        </div>
+
+        <div class="channel active" onclick="changeChannel('welcome')">
+            # welcome
+        </div>
+
+        <div class="channel" onclick="changeChannel('rules')">
+            # rules
+        </div>
+
+        <div class="channel" onclick="changeChannel('announcements')">
+            # announcements
+        </div>
+
+
+        <div class="category">
+            COMMUNITY
+        </div>
+
+        <div class="channel" onclick="changeChannel('general')">
+            # general
+        </div>
+
+        <div class="channel" onclick="changeChannel('media')">
+            # media
+        </div>
+
+        <div class="channel" onclick="changeChannel('bot-commands')">
+            # bot-commands
+        </div>
+
+
+        <div class="category">
+            VOICE
+        </div>
+
+        <div class="channel">
+            🔊 General
+        </div>
+
+        <div class="channel">
+            🔊 Gaming
+        </div>
+
+        <div class="channel">
+            🔇 AFK
+        </div>
+
+
+        <div class="user-area">
+
+            <div class="avatar" id="userAvatar">
+                G
+            </div>
+
+            <div class="username">
+                <span id="usernameDisplay">Guest</span>
+                <small>Online</small>
+            </div>
+
+            <button class="settings" onclick="openSettings()">
+                ⚙
+            </button>
+
+        </div>
+
     </aside>
+
+
+    <!-- CHAT -->
 
     <main class="chat">
-      <header class="chat-header">
-        <div>
-          <h2 id="channelTitle"># welcome</h2>
-          <p id="channelTopic">Welcome to the Discorda community.</p>
-        </div>
-        <div class="header-actions">
-          <button>🔔</button>
-          <button>📌</button>
-          <button>👥</button>
-          <button class="search">Search Discorda 🔍</button>
-        </div>
-      </header>
 
-      <section class="messages" id="messages"></section>
+        <header class="chat-header">
 
-      <div class="composer">
-        <button>＋</button>
-        <input id="messageInput" placeholder="Message # welcome" autocomplete="off">
-        <button>GIF</button>
-        <button>😊</button>
-        <button id="sendBtn">➤</button>
-      </div>
+            <h2 id="channelTitle">
+                # welcome
+            </h2>
+
+        </header>
+
+
+        <section class="messages" id="messages">
+
+            <div class="welcome">
+
+                <h1>
+                    Welcome to Discorda 👋
+                </h1>
+
+                <p>
+                    This is your new Discorda community.
+                </p>
+
+                <p>
+                    Check out the channels on the left
+                    and start chatting.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <div class="composer">
+
+            <input
+                id="messageInput"
+                placeholder="Message # welcome"
+            >
+
+            <button onclick="sendMessage()">
+                ➤
+            </button>
+
+        </div>
+
     </main>
 
-    <aside class="members">
-      <h3>ONLINE — 4</h3>
-      <div class="member"><div class="avatar blue">K</div><span>Kryton</span><em>Owner</em></div>
-      <div class="member"><div class="avatar green">A</div><span>Arcane</span><em>Moderator</em></div>
-      <div class="member"><div class="avatar purple">C</div><span>Counting</span><em>Bot</em></div>
-      <div class="member"><div class="avatar orange">G</div><span>Giveaway</span><em>Bot</em></div>
-      <h3 class="offline">OFFLINE — 2</h3>
-      <div class="member muted"><div class="avatar">M</div><span>Mia</span></div>
-      <div class="member muted"><div class="avatar">J</div><span>Jordan</span></div>
-    </aside>
-  </div>
+</div>
 
-  <div class="modal hidden" id="settingsModal">
-    <div class="modal-card">
-      <button class="close" id="closeSettings">×</button>
-      <h2>Discorda Settings</h2>
-      <p>Prototype settings panel</p>
-      <label>Display name</label>
-      <input value="Kryton">
-      <label>Theme</label>
-      <select><option>Dark</option><option>Light</option></select>
-      <button class="save" id="saveSettings">Save changes</button>
+
+<!-- SETTINGS -->
+
+<div class="modal" id="settingsModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeSettings()">
+            ×
+        </button>
+
+        <h2>Discorda Settings</h2>
+
+        <p>Account settings</p>
+
+        <input
+            id="newUsername"
+            placeholder="Display name"
+        >
+
+        <button onclick="saveUsername()">
+            Save Changes
+        </button>
+
+        <button
+            onclick="logout()"
+            style="background:#ed4245"
+        >
+            Log Out
+        </button>
+
     </div>
-  </div>
 
-  <script src="script.js"></script>
+</div>
+
+
+<!-- REGISTER -->
+
+<div class="modal" id="registerModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeRegister()">
+            ×
+        </button>
+
+        <h2>Create Discorda Account</h2>
+
+        <p>Registration prototype</p>
+
+        <input
+            id="registerUsername"
+            placeholder="Username"
+        >
+
+        <input
+            type="email"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            placeholder="Password"
+        >
+
+        <button onclick="createAccount()">
+            Create Account
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* LOGIN */
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let username =
+        document.getElementById("loginUsername").value;
+
+    enterDiscorda(username);
+
+});
+
+
+function loginAsGuest() {
+
+    enterDiscorda("Guest");
+
+}
+
+
+function enterDiscorda(username) {
+
+    if (!username) {
+        username = "Guest";
+    }
+
+    document.getElementById("loginPage").style.display = "none";
+
+    document.getElementById("app").style.display = "grid";
+
+    document.getElementById("usernameDisplay").textContent =
+        username;
+
+    document.getElementById("userAvatar").textContent =
+        username.charAt(0).toUpperCase();
+
+}
+
+
+/* CHANNELS */
+
+function changeChannel(channel) {
+
+    document.querySelectorAll(".channel").forEach(function(element) {
+
+        element.classList.remove("active");
+
+    });
+
+    event.currentTarget.classList.add("active");
+
+    document.getElementById("channelTitle").textContent =
+        "# " + channel;
+
+    document.getElementById("messageInput").placeholder =
+        "Message # " + channel;
+
+    let messages =
+        document.getElementById("messages");
+
+    if (channel === "welcome") {
+
+        messages.innerHTML = `
+            <div class="welcome">
+                <h1>Welcome to Discorda 👋</h1>
+                <p>This is your new Discorda community.</p>
+                <p>Check out the channels on the left and start chatting.</p>
+            </div>
+        `;
+
+    }
+
+    else {
+
+        messages.innerHTML = `
+            <div class="welcome">
+                <h1># ${channel}</h1>
+                <p>This channel is ready for messages.</p>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* MESSAGES */
+
+function sendMessage() {
+
+    let input =
+        document.getElementById("messageInput");
+
+    let message =
+        input.value.trim();
+
+    if (!message) {
+        return;
+    }
+
+    let username =
+        document.getElementById("usernameDisplay").textContent;
+
+    let messages =
+        document.getElementById("messages");
+
+    messages.innerHTML += `
+
+        <div class="message">
+
+            <div class="avatar">
+                ${username.charAt(0).toUpperCase()}
+            </div>
+
+            <div class="message-content">
+
+                <b>
+                    ${username}
+                    <span class="message-time">
+                        Today
+                    </span>
+                </b>
+
+                <p>
+                    ${escapeHTML(message)}
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+    input.value = "";
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+document.getElementById("messageInput")
+.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+
+});
+
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* SETTINGS */
+
+function openSettings() {
+
+    document.getElementById("settingsModal")
+    .style.display = "flex";
+
+}
+
+
+function closeSettings() {
+
+    document.getElementById("settingsModal")
+    .style.display = "none";
+
+}
+
+
+function saveUsername() {
+
+    let username =
+        document.getElementById("newUsername").value;
+
+    if (!username) {
+        return;
+    }
+
+    document.getElementById("usernameDisplay")
+    .textContent = username;
+
+    document.getElementById("userAvatar")
+    .textContent =
+        username.charAt(0).toUpperCase();
+
+    closeSettings();
+
+}
+
+
+function logout() {
+
+    closeSettings();
+
+    document.getElementById("app")
+    .style.display = "none";
+
+    document.getElementById("loginPage")
+    .style.display = "flex";
+
+}
+
+
+/* REGISTER */
+
+function openRegister() {
+
+    document.getElementById("registerModal")
+    .style.display = "flex";
+
+}
+
+
+function closeRegister() {
+
+    document.getElementById("registerModal")
+    .style.display = "none";
+
+}
+
+
+function createAccount() {
+
+    let username =
+        document.getElementById("registerUsername").value;
+
+    if (!username) {
+
+        alert("Please enter a username.");
+
+        return;
+
+    }
+
+    closeRegister();
+
+    enterDiscorda(username);
+
+}
+
+</script>
+
 </body>
 </html>
