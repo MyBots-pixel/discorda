@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discorda</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="auth-screen">
+
+    <div class="auth-box">
+      <h1>Welcome to Discorda</h1>
+      <p>Create an account or log in to continue.</p>
+
+      <input id="email" type="email" placeholder="Email">
+      <input id="password" type="password" placeholder="Password">
+
+      <button onclick="login()">Log In</button>
+      <button class="secondary" onclick="register()">Create Account</button>
+
+      <p id="message"></p>
+    </div>
+
+  </div>
+
+  <div id="app" style="display:none">
+
+    <aside class="servers">
+      <div class="server active">D</div>
+      <div class="server">+</div>
+    </aside>
+
+    <aside class="channels">
+
+      <div class="server-name">
+        Discorda
+      </div>
+
+      <div class="channel-category">
+        TEXT CHANNELS
+      </div>
+
+      <div class="channel active">
+        # general
+      </div>
+
+      <div class="channel">
+        # welcome
+      </div>
+
+      <div class="channel">
+        # gaming
+      </div>
+
+      <div class="bottom-user">
+        <div>
+          <strong id="user-email"></strong>
+        </div>
+
+        <button onclick="logout()">Logout</button>
+      </div>
+
+    </aside>
+
+    <main class="chat">
+
+      <header>
+        <strong># general</strong>
+      </header>
+
+      <section id="messages">
+        <div class="welcome">
+          <h2>Welcome to Discorda!</h2>
+          <p>This is your first real Discorda server.</p>
+        </div>
+      </section>
+
+      <form id="message-form">
+        <input
+          id="message-input"
+          type="text"
+          placeholder="Message #general"
+          autocomplete="off"
+        >
+        <button type="submit">Send</button>
+      </form>
+
+    </main>
+
+  </div>
+
+  <script type="module" src="app.js"></script>
+
+</body>
+</html>
